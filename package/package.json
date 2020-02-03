@@ -8,6 +8,6 @@
   "canonical": "http://fhir.org/templates/hl7.base.template",
   "base": "fhir.base.template",
   "dependencies": {
-    "fhir.base.template": "0.0.2"
+    "fhir.base.template": "current"
   }
 }
