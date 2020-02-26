@@ -1,6 +1,6 @@
 {
   "name": "hl7.base.template",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "type": "fhir.template",
   "license": "CC0-1.0",
   "description": "HL7 Core Template - base tempalte for use with HL7-published IGs.  Shouldn't be used directly - use FHIR, v2, CDA, etc.",
