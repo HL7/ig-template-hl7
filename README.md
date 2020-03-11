@@ -2,4 +2,4 @@
 
 package id = hl7.base.template
 
-Base template for HL7-published IGs.  Foundation for family-specific templates
+Base template for HL7 International-published IGs.  Foundation for family-specific templates

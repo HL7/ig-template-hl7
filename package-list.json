@@ -26,16 +26,17 @@
       "path": "http://fhir.org/templates/hl7.base.template/0.1.0",
       "status": "release",
       "sequence": "Publications",
-      "current": true,
+      "current": false,
       "date": "2020-02-17"
     },
     {
       "version": "0.0.1",
-      "date": "2020-02-03",
       "desc": "First Release",
       "path": "http://fhir.org/templates/fhir.base.template/0.0.1",
       "status": "release",
-      "sequence": "Publications"
+      "sequence": "Publications",
+      "current": false,
+      "date": "2020-02-03"
     }
   ]
 }
