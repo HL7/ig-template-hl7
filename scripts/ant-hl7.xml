@@ -17,7 +17,13 @@
       <and>
         <available file="${file.workgroups}"/>
         <available file="${file.packagelist}"/>
+        <available file="${file.jiraspec}"/>
       </and>
+    </condition>
+    <condition property="online" value="yes">
+      <or>
+        <available file="${file.workgroups}"/>
+      </or>
     </condition>
   </target>
   <target name="onGenerate.jira.generate" depends="onGenerate.jira.setup" if="doJira">
@@ -59,11 +65,11 @@
     <copy file="${file.jira}" tofile="${ig.root}/${jiraSpecFile}.xml"/>
     <echo file="${ig.template}/ongenerate-validation-jira.json" message='&#x0a;{"severity":"warning","code":"informational","details":{"text":"The jira specification file appears to be out of date with the versions, artifacts and pages currently defined in the IG.  A proposed revised file to be reviewed and, if appropriate, submitted as a pull request against the XML folder in https://github.com/HL7/JIRA-Spec-Artifacts.  To see the differences, perform a file compare on &apos;template/${name.jiraspec.tmp}&apos; (currently in Github) and &apos;${name.jira}&apos; (reflects current IG content)"}}&#x0a;,'/>
   </target>   
-  <target name="onGenerate.jira.skip" depends="onGenerate.jira.setup" unless="doJira">
-    <condition property="skip.reason" value="package-list.json file is not yet defined" else="build is running offline">
-      <available file="${file.packagelist}"/>
-    </condition>
-    <echo message="Skipped checking for revised jira spec file because ${skip.reason}"/>
+  <target name="onGenerate.jira.skip-offline" depends="onGenerate.jira.setup" unless="doJira,online">
+    <echo message="Skipped checking for revised jira spec file because running off-line"/>
   </target>
-  <target name="onGenerate.jira" depends="onGenerate.jira.check,onGenerate.jira.skip" extensionOf="onGenerate.extend"/>
+  <target name="onGenerate.jira.skip-missing" depends="onGenerate.jira.setup" if="online" unless="doJira">
+    <echo file="${ig.template}/ongenerate-validation-jira.json" message='&#x0a;{"severity":"error","code":"informational","details":{"text":"There is no jira specification file defined with the expected name of ${jiraSpecFile} in the xml folder of the  https://github.com/HL7/Jira-Spec-Artifacts project.  This must exist before ballot or publication."}}'/>
+  </target>
+  <target name="onGenerate.jira" depends="onGenerate.jira.check,onGenerate.jira.skip-offline,onGenerate.jira.skip-missing" extensionOf="onGenerate.extend"/>
 </project>
