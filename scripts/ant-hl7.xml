@@ -25,6 +25,13 @@
         <available file="${file.workgroups}"/>
       </or>
     </condition>
+<get src="https://github.com/HL7/JIRA-Spec-Artifacts/raw/master/xml/_workgroups.xml" dest="${file.workgroups}" ignoreerrors="true"/>
+<condition property="online2" value="yes">
+  <or>
+    <available file="${file.workgroups}"/>
+  </or>
+</condition>
+<echo message="debug: ${online}:${online2}:https://github.com/HL7/JIRA-Spec-Artifacts/raw/master/xml/_workgroups.xml"/>
   </target>
   <target name="onGenerate.jira.generate" depends="onGenerate.jira.setup" if="doJira">
     <property name="file.packagelist.tmp" value="${ig.template}/package-list.tmp.xml"/>
