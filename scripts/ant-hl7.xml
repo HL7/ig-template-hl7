@@ -25,13 +25,6 @@
         <available file="${file.workgroups}"/>
       </or>
     </condition>
-<get src="https://github.com/HL7/JIRA-Spec-Artifacts/raw/master/xml/_workgroups.xml" dest="${file.workgroups}" ignoreerrors="true"/>
-<condition property="online2" value="yes">
-  <or>
-    <available file="${file.workgroups}"/>
-  </or>
-</condition>
-<echo message="debug: ${online}:${online2}:https://github.com/HL7/JIRA-Spec-Artifacts/raw/master/xml/_workgroups.xml"/>
   </target>
   <target name="onGenerate.jira.generate" depends="onGenerate.jira.setup" if="doJira">
     <property name="file.packagelist.tmp" value="${ig.template}/package-list.tmp.xml"/>
@@ -76,16 +69,6 @@
     <echo message="Skipped checking for revised jira spec file because running off-line"/>
   </target>
   <target name="onGenerate.jira.skip-missing" depends="onGenerate.jira.setup" if="online" unless="doJira">
-<condition property="wgavail">
-  <available file="${file.workgroups}"/>
-</condition>
-<condition property="pkgavail">
-  <available file="${file.packagelist}"/>
-</condition>
-<condition property="jiraavail">
-  <available file="${file.jiraspec}"/>
-</condition>
-<echo message="${wgavail}:${pkgavail}:${jiraavail}: https://github.com/HL7/JIRA-Spec-Artifacts/raw/master/xml/${jiraSpecFile}.xml"/>
     <echo file="${ig.template}/ongenerate-validation-jira.json" message='&#x0a;{"severity":"error","code":"informational","details":{"text":"There is no jira specification file defined with the expected name of ${jiraSpecFile} in the xml folder of the  https://github.com/HL7/Jira-Spec-Artifacts project.  This must exist before ballot or publication."}}'/>
   </target>
   <target name="onGenerate.jira" depends="onGenerate.jira.check,onGenerate.jira.skip-offline,onGenerate.jira.skip-missing" extensionOf="onGenerate.extend"/>
