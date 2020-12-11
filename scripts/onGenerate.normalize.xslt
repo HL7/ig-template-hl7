@@ -8,8 +8,11 @@
     <xsl:copy>
       <xsl:for-each select="@*">
         <xsl:sort select="local-name(.)"/>
-        <xsl:copy-of select="."/>
+        <xsl:if test="local-name(.)=name(.)">
+          <xsl:copy-of select="."/>
+        </xsl:if>
       </xsl:for-each>
+      <xsl:text>&#xa;</xsl:text>
       <xsl:apply-templates select="version"/>
       <xsl:for-each select="artifactPageExtension">
         <xsl:sort select="@value"/>
