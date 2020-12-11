@@ -38,6 +38,9 @@
         <xsl:when test="/root/package-list/package[@status='trial-use' or @status='update' or @status='normative' or @status='trial-use+normative']">
           <xsl:value-of select="/root/package-list/package[@status='trial-use' or @status='update' or @status='normative' or @status='trial-use+normative'][1]/@version"/>
         </xsl:when>
+        <xsl:when test="/root/package-list/package[@status='ballot']">
+          <xsl:value-of select="/root/package-list/package[@status='ballot'][1]/@version"/>
+        </xsl:when>
         <xsl:otherwise>
           <xsl:value-of select="/root/package-list/package[1]/@version"/>
         </xsl:otherwise>
