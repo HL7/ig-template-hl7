@@ -83,9 +83,11 @@
           </xsl:if>
         </version>
       </xsl:for-each>
-      <xsl:if test="not(/root/package-list/package/@version='1.0')">
-        <version code="0.1" deprecated="true"/>
-      </xsl:if>
+      <xsl:for-each select="/root/specification/version[@deprecated='true']">
+        <xsl:if test="not(/root/package-list/package[@version=current()/@code])">
+          <xsl:copy-of select="."/>
+        </xsl:if>
+      </xsl:for-each>
       <artifactPageExtension value="-definitions"/>
       <artifactPageExtension value="-examples"/>
       <artifactPageExtension value="-mappings"/>
