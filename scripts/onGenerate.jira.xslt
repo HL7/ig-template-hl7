@@ -28,7 +28,7 @@
         <xsl:value-of select="concat('Unable to find Jira work group defined that corresponds with HL7 website http://', $committeePageBase, $wgWebCode, '.  If that URL resolves, please contact the HL7 webmaster.')"/>
       </xsl:message>
     </xsl:if>
-    <xsl:for-each select="/root/package-list/package[not(@status='ci-build' or @status='preview' or @status='ballot' or @status='trial-use' or @status='update' or @status='normative' or status='trial-use+normative')]">
+    <xsl:for-each select="/root/package-list/package[not(@status='ci-build' or @status='preview' or @status='draft' or @status='ballot' or @status='trial-use' or @status='update' or @status='normative' or status='trial-use+normative')]">
       <xsl:message terminate="yes">
         <xsl:value-of select="concat('Unrecognized package-list status: ', @status, ' for release ', @version)"/>
       </xsl:message>
@@ -38,11 +38,31 @@
         <xsl:when test="/root/package-list/package[@status='trial-use' or @status='update' or @status='normative' or @status='trial-use+normative']">
           <xsl:value-of select="/root/package-list/package[@status='trial-use' or @status='update' or @status='normative' or @status='trial-use+normative'][1]/@version"/>
         </xsl:when>
+        <xsl:when test="/root/package-list/package[@status='ballot']">
+          <xsl:value-of select="/root/package-list/package[@status='ballot'][1]/@version"/>
+        </xsl:when>
         <xsl:otherwise>
           <xsl:value-of select="/root/package-list/package[1]/@version"/>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
+    <xsl:for-each select="/root/f:ImplementationGuide/f:definition/f:resource">
+      <xsl:variable name="normalized-name">
+        <xsl:choose>
+          <xsl:when test="contains(f:name/@value, '(')">
+            <xsl:value-of select="normalize-space(substring-before(f:name/@value, '('))"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:value-of select="normalize-space(f:name/@value)"/>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:variable>
+      <xsl:if test="preceding-sibling::f:resource[f:name/@value=$normalized-name or normalize-space(substring-before(f:name/@value, '('))=$normalized-name]">
+        <xsl:message>
+          <xsl:value-of select="concat('**WARNING** Jira file generation will not be correct because multiple artifacts have the same name (ignoring content in &quot;()&quot;): ', $normalized-name)"/>
+        </xsl:message>
+      </xsl:if>
+    </xsl:for-each>
     <xsl:if test="not(/root/package-list/package[@version=$version])">
       <xsl:message>
         <xsl:value-of select="concat('Version specified in the IG (', $version, ') does not correspond to any of the versions listed in the package-list.json')"/>
@@ -63,9 +83,11 @@
           </xsl:if>
         </version>
       </xsl:for-each>
-      <xsl:if test="not(/root/package-list/package/@version='1.0')">
-        <version code="0.1" deprecated="true"/>
-      </xsl:if>
+      <xsl:for-each select="/root/specification/version[@deprecated='true']">
+        <xsl:if test="not(/root/package-list/package[@version=current()/@code])">
+          <xsl:copy-of select="."/>
+        </xsl:if>
+      </xsl:for-each>
       <artifactPageExtension value="-definitions"/>
       <artifactPageExtension value="-examples"/>
       <artifactPageExtension value="-mappings"/>
