@@ -110,10 +110,12 @@
             <xsl:variable name="baseId" select="substring-after(f:reference/f:reference/@value, '/')"/>
             <xsl:variable name="artifactId" select="concat(substring-before(f:reference/f:reference/@value, '/'), '-', $baseId)"/>
             <xsl:variable name="name" select="f:name/@value"/>
-            <xsl:if test="$key=$baseId or $key=$artifactId or $keyName=$name or normalize-space(substring-before($keyName, '('))=$name">yes</xsl:if>
+            <xsl:if test="$key=$baseId or $key=$artifactId or $keyName=$name or normalize-space(substring-before($keyName, '('))=$name">
+              <xsl:value-of select="$artifactId"/>
+            </xsl:if>
           </xsl:for-each>
         </xsl:variable>
-        <xsl:if test="$found=''">
+        <xsl:if test="$found='' or not($found=@key)">
           <xsl:copy>
             <xsl:copy-of select="@*"/>
             <xsl:attribute name="deprecated">true</xsl:attribute>
