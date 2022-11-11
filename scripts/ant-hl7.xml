@@ -95,7 +95,7 @@
     <xslt in="${file.jira.tmp}" out="${file.jira.tmp2}" style="${ig.scripts}/onGenerate.process-pkg-list.xslt"/>
     <xslt in="${file.jira.tmp2}" out="${file.jira.tmp3}" style="${ig.scripts}/onGenerate.jira.xslt"/>
     <xslt in="${file.jira.tmp3}" out="${file.jira}" style="${ig.scripts}/onGenerate.normalize.xslt"/>
-    <xslt in="${file.jiraspec}" out="${file.jiraspec.tmp}" style="${ig.scripts}/onGenerate.normalize.xslt"/>
+    <xslt in="${file.jiraspec}" out="${file.jiraspec.tmp}" style="${ig.scripts}/onGenerate.normalize.xslt" failOnError="false"/>
     <condition property="jiraMatch">
       <filesmatch file1="${file.jira}" file2="${file.jiraspec.tmp}" textfile="true"/>
     </condition>
