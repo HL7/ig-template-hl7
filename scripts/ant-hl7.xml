@@ -51,6 +51,11 @@
   <target name="onGenerate.jira.packagelistProcess" depends="onGenerate.jira.packagelistcopy,onGenerate.jira.packagelistget" if="workingpackagelistExists">
     <concat encoding="UTF-8" destfile="${file.packagelist.tmp}" ignoreempty="true">
       <fileset file="${file.workingpackagelist}"/>
+      <filterchain>
+        <tokenfilter>
+          <replacestring from="&amp;" to="&amp;amp;"/>
+        </tokenfilter>
+      </filterchain>
       <header filtering="no">&lt;json&gt;</header>
       <footer filtering="no">&lt;/json&gt;</footer>
     </concat>
@@ -62,6 +67,11 @@
   <target name="onGenerate.jira.pubrequestProcess" depends="onGenerate.jira.setup" if="pubrequestExists">
     <concat encoding="UTF-8" destfile="${file.pubrequest.tmp}">
       <fileset file="${file.pubrequest}"/>
+      <filterchain>
+        <tokenfilter>
+          <replacestring from="&amp;" to="&amp;amp;"/>
+        </tokenfilter>
+      </filterchain>
       <header filtering="no">&lt;json&gt;</header>
       <footer filtering="no">&lt;/json&gt;</footer>
     </concat>
