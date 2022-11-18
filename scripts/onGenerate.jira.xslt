@@ -30,8 +30,8 @@
     </xsl:if>
     <xsl:for-each select="/root/package-list/package[@status='release']">
       <xsl:message terminate="yes">
-        <xsl:value-of select="concat('Unrecognized package-list status &quot;release&quot; for release ', @version, 
-          ' is not allowed for IGs using the HL7 template.  Use a more specific status (draft, informative, trial-use, normative, trial-use+normative)')"/>
+        <xsl:value-of select="concat('Package-list status &quot;release&quot; for release ', @version, 
+          ' is not allowed for IGs using the HL7 template.  Use a more specific status (draft, informative, trial-use, normative, trial-use+normative, etc.)')"/>
       </xsl:message>
     </xsl:for-each>
     <xsl:for-each select="/root/package-list/package[not(@status='ci-build' or @status='preview' or @status='draft' or @status='ballot' or @status='informative' or @status='trial-use' or @status='update' or @status='normative' or status='trial-use+normative')]">
