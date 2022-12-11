@@ -21,7 +21,17 @@
         <xsl:value-of select="concat('First &quot;url&quot; contact telecom must start with &quot;http://', $committeePageBase, '&quot;')"/>
       </xsl:message>
     </xsl:if>
-    <xsl:variable name="wgWebCode" select="substring-after($wgUrl, $committeePageBase)"/>
+    <xsl:variable name="wgTail" select="substring-after($wgUrl, $committeePageBase)"/>
+    <xsl:variable name="wgWebCode">
+      <xsl:choose>
+        <xsl:when test="contains($wgTail, '/index.cfm')">
+          <xsl:value-of select="normalize-space(substring-before($wgTail, '/index.cfm'))"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="normalize-space($wgTail)"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
     <xsl:variable name="wg" select="/root/workgroups/workgroup[@webcode=$wgWebCode]/@key"/>
     <xsl:if test="$wg=''">
       <xsl:message terminate="yes">
