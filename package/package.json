@@ -1,13 +1,13 @@
 ﻿{
-  "name": "hl7.base.template",
-  "type": "fhir.template",
-  "license": "CC0-1.0",
-  "description": "HL7 Core Template - base tempalte for use with HL7-published IGs.  Shouldn\u0027t be used directly - use FHIR, v2, CDA, etc.",
-  "author": "http://hl7.org/fhir",
-  "canonical": "http://fhir.org/templates/hl7.base.template",
-  "base": "fhir.base.template",
-  "dependencies": {
-    "fhir.base.template": "current"
+  "name" : "hl7.base.template",
+  "type" : "fhir.template",
+  "license" : "CC0-1.0",
+  "description" : "HL7 Core Template - base tempalte for use with HL7-published IGs.  Shouldn't be used directly - use FHIR, v2, CDA, etc.",
+  "author" : "http://hl7.org/fhir",
+  "canonical" : "http://fhir.org/templates/hl7.base.template",
+  "base" : "fhir.base.template",
+  "dependencies" : {
+    "fhir.base.template" : "current"
   },
-  "version": "0.5.0"
+  "version" : "0.6.0"
 }
