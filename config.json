@@ -1,3 +1,4 @@
 {
-	"script": "scripts/ant-hl7.xml"
+	"script": "scripts/ant-hl7.xml",
+	"parameters": "jira-code"
 }
