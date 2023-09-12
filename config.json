@@ -1,4 +1,5 @@
 {
 	"script": "scripts/ant-hl7.xml",
+	"otherScripts" : [],
 	"template-parameters": ["jira-code"]
 }
