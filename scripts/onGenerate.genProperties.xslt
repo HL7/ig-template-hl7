@@ -25,8 +25,8 @@
         <xsl:when test="$id='hl7.fhir.cda' or $id='hl7.fhir.v2'">
           <xsl:text>uv</xsl:text>
         </xsl:when>
-        <xsl:when test="contains(substring-after($id, concat($family, '.')), '.')">
-          <xsl:value-of select="substring-before(substring-after($id, concat($family, '.')), '.')"/>
+        <xsl:when test="contains(substring-after($id, concat($basefamily, '.')), '.')">
+          <xsl:value-of select="substring-before(substring-after($id, concat($basefamily, '.')), '.')"/>
         </xsl:when>
       </xsl:choose>
     </xsl:variable>
@@ -42,7 +42,7 @@
           <xsl:value-of select="substring-after($id, concat($realm, '.'))"/>
         </xsl:when>
         <xsl:otherwise>
-          <xsl:value-of select="substring-after($id, concat($family, '.'))"/>
+          <xsl:value-of select="substring-after($id, concat($basefamily, '.'))"/>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
