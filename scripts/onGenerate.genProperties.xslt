@@ -56,7 +56,7 @@
         <xsl:value-of select="concat('Unrecognized family in id: ', $id, '.  ImplementationGuide.id must be in the form &quot;', 'hl7.[family].[realm].id', '&quot; where family is cda, fhir, v2, xprod, or other')"/>
       </xsl:message>
     </xsl:if>
-    <xsl:if test="not($realm='us' or $realm='uv')">
+    <xsl:if test="not($realm='us' or $realm='uv' or $realm='eu')">
       <xsl:message terminate="yes">
         <xsl:value-of select="concat('Unrecognized realm in id: ', $id, '.  ImplementationGuide.id must be in the form &quot;', 'hl7.[family].[realm].id', '&quot; where realm is uv or us.')"/>
       </xsl:message>
