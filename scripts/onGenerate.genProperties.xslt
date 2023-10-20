@@ -58,7 +58,7 @@
     </xsl:if>
     <xsl:if test="not($realm='us' or $realm='uv' or $realm='eu')">
       <xsl:message terminate="yes">
-        <xsl:value-of select="concat('Unrecognized realm in id: ', $id, '.  ImplementationGuide.id must be in the form &quot;', 'hl7.[family].[realm].id', '&quot; where realm is uv or us.')"/>
+        <xsl:value-of select="concat('Unrecognized realm in id: ', $id, '.  ImplementationGuide.id must be in the form &quot;', 'hl7.[family].[realm].id', '&quot; where realm is uv, us or eu.')"/>
       </xsl:message>
     </xsl:if>
     <xsl:text>jiraSpecFile:</xsl:text>
