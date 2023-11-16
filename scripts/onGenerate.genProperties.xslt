@@ -28,6 +28,7 @@
         <xsl:when test="contains(substring-after($id, concat($basefamily, '.')), '.')">
           <xsl:value-of select="substring-before(substring-after($id, concat($basefamily, '.')), '.')"/>
         </xsl:when>
+        <xsl:otherwise>uv</xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
     <xsl:variable name="code">
@@ -56,7 +57,7 @@
         <xsl:value-of select="concat('Unrecognized family in id: ', $id, '.  ImplementationGuide.id must be in the form &quot;', 'hl7.[family].[realm].id', '&quot; where family is cda, fhir, v2, xprod, or other')"/>
       </xsl:message>
     </xsl:if>
-    <xsl:if test="not($realm='us' or $realm='uv')">
+    <xsl:if test="not($realm='us' or $realm='uv' or $realm='eu')">
       <xsl:message terminate="yes">
         <xsl:value-of select="concat('Unrecognized realm in id: ', $id, '.  ImplementationGuide.id must be in the form &quot;', 'hl7.[family].[realm].id', '&quot; where realm is uv or us.')"/>
       </xsl:message>
@@ -64,8 +65,10 @@
     <xsl:text>jiraSpecFile:</xsl:text>
     <xsl:value-of select="translate($family, 'abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ')"/>
     <xsl:choose>
-      <xsl:when test="$realm='us'">-us-</xsl:when>
-      <xsl:otherwise>-</xsl:otherwise>
+      <xsl:when test="$realm='uv'">-</xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="concat('-', $realm, '-')"/>
+      </xsl:otherwise>
     </xsl:choose>
     <xsl:value-of select="$code"/>
     <xsl:value-of select="concat('&#x0a;packagelisturl:', substring-before(f:url/@value, 'ImplementationGuide'), 'package-list.json')"/>
