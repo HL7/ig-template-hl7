@@ -18,7 +18,7 @@
     <xsl:variable name="wgUrl" select="f:contact/f:telecom[f:system/@value='url'][1]/f:value/@value"/>
     <xsl:if test="not(contains($wgUrl, $committeePageBase))">
       <xsl:message terminate="yes">
-        <xsl:value-of select="concat('First &quot;url&quot; contact telecom must start with &quot;http://', $committeePageBase, '&quot;')"/>
+        <xsl:value-of select="concat('First &quot;url&quot; contact telecom must start with &quot;http://www.', $committeePageBase, '&quot;')"/>
       </xsl:message>
     </xsl:if>
     <xsl:variable name="wgTail" select="substring-after($wgUrl, $committeePageBase)"/>
@@ -35,7 +35,7 @@
     <xsl:variable name="wg" select="/root/workgroups/workgroup[@webcode=$wgWebCode]/@key"/>
     <xsl:if test="$wg=''">
       <xsl:message terminate="yes">
-        <xsl:value-of select="concat('Unable to find Jira work group defined that corresponds with HL7 website http://', $committeePageBase, $wgWebCode, '.  If that URL resolves, please contact the HL7 webmaster.')"/>
+        <xsl:value-of select="concat('Unable to find Jira work group defined that corresponds with HL7 website http://www.', $committeePageBase, $wgWebCode, '.  If that URL resolves, please contact the HL7 webmaster.')"/>
       </xsl:message>
     </xsl:if>
     <xsl:for-each select="/root/package-list/package[@status='release']">
