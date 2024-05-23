@@ -54,6 +54,7 @@
       <filterchain>
         <tokenfilter>
           <replacestring from="&amp;" to="&amp;amp;"/>
+          <replacestring from="&gt;" to="&amp;gt;"/>
         </tokenfilter>
       </filterchain>
       <header filtering="no">&lt;json&gt;</header>
