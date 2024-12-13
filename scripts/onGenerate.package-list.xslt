@@ -11,10 +11,16 @@
           <xsl:with-param name="json" select="."/>
         </xsl:call-template>
       </xsl:variable>
+      <xsl:variable name="strippedLanguages">
+        <xsl:call-template name="stripArray">
+          <xsl:with-param name="arrayName" select="'languages'"/>
+          <xsl:with-param name="string" select="$safeJson"/>
+        </xsl:call-template>
+      </xsl:variable>
       <xsl:variable name="strippedCorrections">
         <xsl:call-template name="stripArray">
           <xsl:with-param name="arrayName" select="'corrections'"/>
-          <xsl:with-param name="string" select="$safeJson"/>
+          <xsl:with-param name="string" select="$strippedLanguages"/>
         </xsl:call-template>
       </xsl:variable>
       <xsl:variable name="strippedSubPackages">
