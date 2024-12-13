@@ -13,7 +13,7 @@
       </xsl:variable>
       <xsl:variable name="strippedLanguages">
         <xsl:call-template name="stripArray">
-          <xsl:with-param name="arrayName" select="'language'"/>
+          <xsl:with-param name="arrayName" select="'languages'"/>
           <xsl:with-param name="string" select="$safeJson"/>
         </xsl:call-template>
       </xsl:variable>
