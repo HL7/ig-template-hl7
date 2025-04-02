@@ -15,6 +15,7 @@
     <xsl:variable name="family">
       <xsl:choose>
         <xsl:when test="$basefamily='xprod'">other</xsl:when>
+        <xsl:when test="$basefamily='ehrs'">other</xsl:when>
         <xsl:otherwise>
           <xsl:value-of select="$basefamily"/>
         </xsl:otherwise>
