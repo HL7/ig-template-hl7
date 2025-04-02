@@ -14,7 +14,7 @@
           </xsl:when>
           <xsl:when test="not(package-list)">
             <xsl:for-each select="publication-request">
-              <package version="current" path="{package/@ci-build}" status="ci-build"/>
+              <package version="current" path="{publication-request/package/@ci-build}" status="ci-build"/>
               <xsl:for-each select="package">
                 <xsl:copy>
                   <xsl:copy-of select="@*[not(local-name(.)='ci-build')]"/>
