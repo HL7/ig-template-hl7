@@ -99,7 +99,16 @@
         <xsl:value-of select="concat('Version specified in the IG (', $version, ') does not correspond to any of the versions listed in the package-list.json')"/>
       </xsl:message>
     </xsl:if>
-    <xsl:variable name="ballotUrl" select="/root/package-list/package[@status='preview' or @status='ballot'][1]/@path"/>
+    <xsl:variable name="ballotUrl">
+      <xsl:choose>
+        <xsl:when test="/root/package-list/package[@status='ballot']">
+          <xsl:value-of select="/root/package-list/package[@status='ballot'][1]/@path"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="/root/package-list/package[@status='preview'][1]/@path"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
     <specification url="{$url}" ciUrl="{$ciUrl}" defaultWorkgroup="{$wg}" defaultVersion="{$version}" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../schemas/specification.xsd">
       <xsl:copy-of select="/root/specification/@gitUrl"/>
       <xsl:if test="$ballotUrl!=''">
