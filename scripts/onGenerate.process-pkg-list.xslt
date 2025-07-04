@@ -12,7 +12,7 @@
           <xsl:when test="not(package-list) and not(publication-request)">
             <package version="current" path="" status="ci-build"/>
           </xsl:when>
-          <xsl:when test="not(package-list)">
+          <xsl:when test="not(package-list/*)">
             <xsl:for-each select="publication-request">
               <package version="current" path="{package/@ci-build}" status="ci-build"/>
               <xsl:for-each select="package">
