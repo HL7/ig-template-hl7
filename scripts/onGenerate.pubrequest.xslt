@@ -15,7 +15,15 @@
     <xsl:param name="package"/>
     <xsl:variable name="version" select="substring-before(substring-after(substring-after(substring-after($package, '&quot;version&quot;'), ':'), '&quot;'), '&quot;')"/>
     <xsl:variable name="path" select="substring-before(substring-after(substring-after(substring-after($package, '&quot;path&quot;'), ':'), '&quot;'), '&quot;')"/>
-    <xsl:variable name="status" select="substring-before(substring-after(substring-after(substring-after($package, '&quot;status&quot;'), ':'), '&quot;'), '&quot;')"/>
+    <xsl:variable name="mode" select="substring-before(substring-after(substring-after(substring-after($package, '&quot;mode&quot;'), ':'), '&quot;'), '&quot;')"/>
+    <xsl:variable name="status">
+      <xsl:choose>
+        <xsl:when test="$mode='withdrawal'">withdrawn</xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of  select="substring-before(substring-after(substring-after(substring-after($package, '&quot;status&quot;'), ':'), '&quot;'), '&quot;')"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
     <xsl:variable name="ci-build" select="substring-before(substring-after(substring-after(substring-after($package, '&quot;ci-build&quot;'), ':'), '&quot;'), '&quot;')"/>
     <package version="{$version}" path="{$path}" status="{$status}" ci-build="{$ci-build}"/>
 	</xsl:template>
