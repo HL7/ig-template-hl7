@@ -85,6 +85,7 @@
     <echo file="${file.pubrequest.xml}" message=""/>
   </target>
   <target name="onGenerate.jira.generate" depends="onGenerate.jira.packagelistProcess,onGenerate.jira.packagelistSkip,onGenerate.jira.pubrequestProcess,onGenerate.jira.pubrequestSkip">
+    <echo message="PackageList: ${packagelisturl}"/>
     <property name="file.jira.tmp" value="${ig.template}/onGenerate.jira.tmp.xml"/>
     <property name="file.jira.tmp2" value="${ig.template}/onGenerate.jira.tmp2.xml"/>
     <property name="file.jira.tmp3" value="${ig.template}/onGenerate.jira.xml"/>
