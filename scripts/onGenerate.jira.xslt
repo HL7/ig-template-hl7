@@ -138,15 +138,19 @@
           <xsl:variable name="name" select="normalize-space(f:name/@value)"/>
           <xsl:variable name="ref" select="normalize-space(f:reference/f:reference/@value)"/>
           <artifact name="{$name}" key="{$artifactId}" id="{$ref}">
-            <xsl:variable name="candidates" select="/root/specification/artifact[@id=$ref or @id=$baseId or @name=$name or normalize-space(substring-before(@name, '('))=$name]"/>
+            <xsl:variable name="candidates">
+              <candidates>
+                <xsl:copy-of select="/root/specification/artifact[@id=$ref or @id=$baseId or @name=$name or normalize-space(substring-before(@name, '('))=$name]"/>
+              </candidates>
+            </xsl:variable>
             <xsl:choose>
-              <xsl:when test="count(exsl:node-set($candidates))=1">
-                <xsl:copy-of select="exsl:node-set($candidates)/@*[not(local-name(.)='id' or local-name(.)='name')]"/>
+              <xsl:when test="count(exsl:node-set($candidates)/*/*)=1">
+                <xsl:copy-of select="exsl:node-set($candidates)/*/*[1]/@*[not(local-name(.)='id' or local-name(.)='name')]"/>
               </xsl:when>
-              <xsl:when test="exsl:node-set($candidates)[@key=$artifactId]">
-                <xsl:copy-of select="exsl:node-set($candidates)[@key=$artifactId]/@*[not(local-name(.)='id' or local-name(.)='name')]"/>
+              <xsl:when test="exsl:node-set($candidates)/*/*[@key=$artifactId]">
+                <xsl:copy-of select="exsl:node-set($candidates)/*/*[@key=$artifactId]/@*[not(local-name(.)='id' or local-name(.)='name')]"/>
               </xsl:when>
-              <xsl:when test="count(exsl:node-set($candidates))!=0">
+              <xsl:when test="count(exsl:node-set($candidates)/*/*)!=0">
                 <xsl:message terminate="yes">
                   <xsl:value-of select="concat('Found multiple candidates for artifact ', $artifactId, ' in previous jira-spec-info')"/>
                   <xsl:copy-of select="exsl:node-set($candidates)"/>
@@ -156,7 +160,9 @@
           </artifact>
         </xsl:for-each>
       </xsl:variable>
+      <a/>
       <xsl:copy-of select="exsl:node-set($artifacts)"/>
+      <b/>
       <xsl:for-each select="/root/specification/artifact">
         <xsl:variable name="key" select="@key"/>
         <xsl:variable name="keyName" select="@name"/>
