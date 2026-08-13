@@ -198,9 +198,23 @@
         <xsl:variable name="name" select="f:title/@value"/>
         <xsl:if test="not(/root/specification/page/otherpage[@url=$pageId])">
           <page name="{$name}" key="{$pageId}">
-            <xsl:for-each select="/root/specification/page[@id=$pageId or @name=$name or normalize-space(substring-before(@name, '('))=$name]">
-              <xsl:copy-of select="@*|*"/>
-            </xsl:for-each>
+            <xsl:choose>
+              <xsl:when test="/root/specification/page[@id=$pageId]">
+                <xsl:for-each select="/root/specification/page[@id=$pageId]">
+                  <xsl:copy-of select="@*|*"/>
+                </xsl:for-each>
+              </xsl:when>
+              <xsl:when test="/root/specification/page[@name=$name]">
+                <xsl:for-each select="/root/specification/page[@name=$name]">
+                  <xsl:copy-of select="@*|*"/>
+                </xsl:for-each>
+              </xsl:when>
+              <xsl:when test="/root/specification/page[normalize-space(substring-before(@name, '('))=$name]">
+                <xsl:for-each select="/root/specification/page[normalize-space(substring-before(@name, '('))=$name]">
+                  <xsl:copy-of select="@*|*"/>
+                </xsl:for-each>
+              </xsl:when>
+            </xsl:choose>
           </page>
         </xsl:if>
       </xsl:for-each>
