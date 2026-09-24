@@ -133,6 +133,7 @@
       <artifactPageExtension value="-mappings"/>
       <xsl:variable name="artifacts">
         <xsl:for-each select="/root/f:ImplementationGuide/f:definition/f:resource">
+          <xsl:variable name="resourceType" select="substring-before(f:reference/f:reference/@value, '/')"/>
           <xsl:variable name="baseId" select="substring-after(f:reference/f:reference/@value, '/')"/>
           <xsl:variable name="artifactId" select="concat(substring-before(f:reference/f:reference/@value, '/'), '-', $baseId)"/>
           <xsl:variable name="name" select="normalize-space(f:name/@value)"/>
@@ -149,6 +150,9 @@
               </xsl:when>
               <xsl:when test="exsl:node-set($candidates)/*/*[@key=$artifactId]">
                 <xsl:copy-of select="exsl:node-set($candidates)/*/*[@key=$artifactId]/@*[not(local-name(.)='id' or local-name(.)='name')]"/>
+              </xsl:when>
+              <xsl:when test="exsl:node-set($candidates)/*/*[@id=concat($resourceType,'/',$baseId)]">
+                <xsl:copy-of select="exsl:node-set($candidates)/*/*[@id=concat($resourceType,'/',$baseId)]/@*[not(local-name(.)='id' or local-name(.)='name')]"/>
               </xsl:when>
               <xsl:when test="count(exsl:node-set($candidates)/*/*)!=0">
                 <xsl:message terminate="yes">
